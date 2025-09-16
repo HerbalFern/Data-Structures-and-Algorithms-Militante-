@@ -122,6 +122,7 @@ List insertSorted(List L, int data){
             L.elem[i+1] = L.elem[i];
     }
     
+    
     L.elem[i+1] = data;
     L.count++;
 
