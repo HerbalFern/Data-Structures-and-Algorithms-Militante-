@@ -56,8 +56,10 @@ void insert(int data, Dictionary D){
 
 
     List* trav; 
-    for (trav = &D[h]; *trav != NULL; trav = &(*trav)->next){}
+    for (trav = &D[h]; *trav != NULL && (*trav)->data < data; trav = &(*trav)->next){}
+    temp->next = *trav;
     *trav = temp;
+    
 
     printf("Inserted %d into the dictionary\n", data);
 }
