@@ -18,7 +18,23 @@ void displayDics(Dictionary D);
 
 int main (){
     
+    Dictionary D = {NULL};
     
+    insert(0, D);
+    insert(20, D);
+    insert(30, D);
+    insert(13, D);
+    insert(33, D);
+    insert(45, D);
+    insert(28, D);
+    insert(48, D);
+    insert(108, D);
+    insert(38, D);
+    
+    delete(108, D);
+    delete(200, D);
+    displayDics(D);
+
     return 0;
 }
 
@@ -77,9 +93,9 @@ int member (int data, Dictionary D){
 void displayDics(Dictionary D){
     List trav;
     for (int i = 0; i < MAX; i++){
-        printf("[%d]: ");
+        printf("[%d]: ", i);
         for (trav = D[i]; trav != NULL;trav = trav->next){
-            printf("%d ->", trav->data);
+            printf("%d -> ", trav->data);
         }
         printf("NULL");
         printf("\n");
