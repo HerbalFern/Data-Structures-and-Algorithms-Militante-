@@ -135,15 +135,20 @@ int front(Queue* q){
 void display(Queue* q){
     
     int i = q->front;
+    Queue* temp = initialize(); 
+
     if (isEmpty(q) == false){ 
-        printf("FRONT -> ");   
-        do{
-            printf("[%d] ", q->list.items[i]);
-            i = (i+1) % MAX;
-        } while (i != (q->rear+1) % MAX);
-        printf(" <- REAR\n");
+        while(!isEmpty(q)){
+            enqueue(temp, front(q));
+            printf("[ %d ]", dequeue(q));
+        }
     } else {
         printf("Queue is empty\n");
     }
+
+    while (!isEmpty(temp)){
+        enqueue(q, dequeue(temp));
+    }
+    free(temp);
 }
 

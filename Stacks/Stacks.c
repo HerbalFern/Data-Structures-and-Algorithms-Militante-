@@ -11,29 +11,25 @@ int isEmpty(arrStack);
 int isFull(arrStack);
 void push(arrStack*, int);
 void pop(arrStack*);
-void peek(arrStack);
+int peek(arrStack);
 
+void displayStack(arrStack stack);
 
 int main(){
 
     arrStack stack;
     initStack(&stack);
 
-    peek(stack);
 
     push(&stack, 1);
     push(&stack, 2);
     push(&stack, 3);
+    push(&stack, 5);
 
-    peek(stack);
-
-    pop(&stack);
     
-    peek(stack);
-    pop(&stack);
-    pop(&stack);
-    pop(&stack);
-    peek(stack);
+    
+
+    displayStack(stack);
     
     return 0;
 }
@@ -58,6 +54,15 @@ void pop(arrStack* stack){
     (isEmpty(*stack) == 0) ? stack->top-- : printf("Stack is empty. Cannot Pop\n");
 }
 
-void peek(arrStack stack){
-    (isEmpty(stack) == 0) ? printf("Top: %d\n", stack.data[stack.top]) : printf("Stack is empty. No Top\n");
+int peek(arrStack stack){
+    if (isEmpty(stack) != 1) return stack.data[stack.top];
+}
+
+void displayStack(arrStack stack){
+    printf("Stack: \n");
+    while (isEmpty(stack)!=1){
+        printf("| %d |\n", peek(stack));
+        pop(&stack);
+    }
+    printf("\n");
 }
