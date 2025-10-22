@@ -124,10 +124,11 @@ bool* difference(Set A, Set B){
 	}
 	
 	return C;
+	}
 }
 
 
-bool isSubSet(Set A, Set Sub){
+bool isSubSet(Set A, Set Sub) {
 	for (int i = 0; i < MAX; i++){
 		if (Sub[i] == 1){
 			if (A[i] != Sub[i]){
