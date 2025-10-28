@@ -32,3 +32,14 @@ int main(){
 
     return 0;
 }
+
+
+void initialize(Dictionary D){
+    
+}
+int hash(int data);
+
+void insert(Dictionary D, int data);
+void delete(Dictionary D, int elem);
+bool member(Dictionary D, int elem);
+
