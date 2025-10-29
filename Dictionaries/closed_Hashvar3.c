@@ -35,6 +35,7 @@ int hash(char data){
     return ((int)Ldata - 'a') % 10;
 }
 
+
 int main(){
     Dictionary D;
     initDicV3(&D);
@@ -43,42 +44,59 @@ int main(){
     display(D);
 
     printf("\n\n=== INSERTION TESTS ===\n");
-    insert(&D, 'A');
-    insert(&D, 'B');
-    insert(&D, 'C');
-    insert(&D, 'K'); // should hash to same index as 'A' if hash mod 10
-    insert(&D, 'L'); // possible collision too
-    insert(&D, 'Z');
-    insert(&D, 'V');
+    insert(&D, 'A'); // prime slot
+    insert(&D, 'B'); // prime slot
+    insert(&D, 'C'); // prime slot
+    insert(&D, 'K'); // collision with 'A'
+    insert(&D, 'L'); // collision with 'B'
+    insert(&D, 'Z'); // new prime
+    insert(&D, 'V'); // collision or new slot
+    insert(&D, 'A'); // duplicate insert
+    insert(&D, 'M'); // new prime
+    insert(&D, 'N'); // new prime
 
     printf("\n\n=== AFTER INSERTIONS ===\n");
     display(D);
 
     printf("\n\n=== MEMBER TESTS ===\n");
-    member(&D, 'A');
-    member(&D, 'K');
-    member(&D, 'Z');
-    member(&D, 'X'); // not inserted, should not be found
+    member(&D, 'A'); // should be found
+    member(&D, 'K'); // should be found in synonym
+    member(&D, 'Z'); // should be found
+    member(&D, 'X'); // not found
+    member(&D, 'M'); // should be found
+    member(&D, 'Y'); // not found
 
     printf("\n\n=== DELETION TESTS ===\n");
-    delete(&D, 'A');
-    delete(&D, 'K');
-    delete(&D, 'X'); // nonexistent element
+    delete(&D, 'A'); // delete prime
+    delete(&D, 'K'); // delete synonym
+    delete(&D, 'X'); // nonexistent
+    delete(&D, 'Z'); // delete prime
+    delete(&D, 'N'); // delete prime
 
     printf("\n\n=== AFTER DELETIONS ===\n");
     display(D);
 
     printf("\n\n=== RE-INSERT TESTS ===\n");
-    insert(&D, 'M');
-    insert(&D, 'N');
-    insert(&D, 'O');
-    insert(&D, 'A'); // reinsert deleted value
+    insert(&D, 'A'); // reinsert deleted prime
+    insert(&D, 'K'); // reinsert deleted synonym
+    insert(&D, 'X'); // insert new element
+    insert(&D, 'Y'); // insert new element
+    insert(&D, 'Z'); // reinsert deleted prime
 
     printf("\n\n=== FINAL STATE ===\n");
     display(D);
 
+    printf("\n\n=== EDGE CASE: FILLING HEAP ===\n");
+    for (char ch = 'E'; ch <= 'T'; ch++){
+        insert(&D, ch);
+    }
+
+    printf("\n\n=== FINAL FULL STATE ===\n");
+    display(D);
+
     return 0;
 }
+
 
 
 
@@ -100,8 +118,19 @@ void insert(Dictionary* D, char data){
     
     // hash the data first and check index
     int HASH = hash(data);
-    if (D->elems[HASH].data != EMPTY && D->elems[HASH].data != DELETED){
-        if (D->elems[HASH].data != data){
+    if (D->elems[HASH].data != EMPTY){
+
+        if (D->elems[HASH].data == DELETED){
+            int* trav; 
+            for (trav = &(D->elems[HASH].link); *trav != -1 && D->elems[*trav].data != data; trav = &(D->elems[*trav].link)){}
+            if (*trav == -1){
+                D->elems[HASH].data = data; 
+            } else {
+                printf("Element '%c' is in the synonym table. Cannot Insert!\n");
+            }
+        }
+
+        else if (D->elems[HASH].data != data){
             int* trav; 
             for (trav = &(D->elems[HASH].link); *trav != -1 && D->elems[*trav].data != data; trav = &(D->elems[*trav].link)){}
             if (*trav == -1){
@@ -113,11 +142,14 @@ void insert(Dictionary* D, char data){
                     return;
                 }
 
+                trav = &(D->elems[HASH].link);
+
                 D->elems[temp].data = data; 
                 D->elems[temp].link = -1;
-
+                
                 D->elems[temp].link = *trav;
                 *trav = temp;
+
                 printf("Element '%c' inserted in HASH[%d]\n", data, HASH);
             } else {
                 printf("Element is already present!\n");
@@ -125,8 +157,6 @@ void insert(Dictionary* D, char data){
         } else {
             printf("Element is already present!\n");
         }
-    } else if (D->elems[HASH].data == data){
-        printf("Element is already present!\n");
     } else {
         D->elems[HASH].data = data;
         D->elems[HASH].link = -1;
