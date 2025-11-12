@@ -75,7 +75,7 @@ void insert(int data, Dictionary D){
 
 
 
-void delete(int data, Dictionary D){
+void delete(int data, Dictionary D) {
     int i, iLimMAX, h = hash(data);
     for (i = h, iLimMAX = 0;iLimMAX < MAX && D[i] != data; i = (i+1) % MAX, iLimMAX++){}
     if (iLimMAX != MAX) D[i] = DELETED;
