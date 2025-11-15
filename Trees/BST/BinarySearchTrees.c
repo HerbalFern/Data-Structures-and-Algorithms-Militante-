@@ -12,7 +12,7 @@ Tree createNode(int data){
     Tree N = malloc(sizeof(Node));
     N->data = data;
     N->left = N->right = NULL;
-      return N;
+    return N;
 }
 
 void initTree(Tree);
