@@ -2,11 +2,18 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define MAX 20
+
 typedef struct node {
     int data;
     struct node* left;
     struct node* right;
 } Node, *Tree;
+
+typedef struct stack {
+    Node ELEM[MAX];
+    int avail;
+} Stack; 
 
 Tree createNode(int data){
     Tree N = malloc(sizeof(Node));
