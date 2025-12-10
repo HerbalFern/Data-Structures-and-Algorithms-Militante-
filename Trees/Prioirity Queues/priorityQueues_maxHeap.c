@@ -22,7 +22,7 @@ int deleteMaxV2(Heap* H);
 void heapify(int arr[], int size, int largest);
 
 // ill try to implement this non-recursively 
-void heapifyV2(int arr[], int size);
+void heapifyV2(int arr[], int size, int i);
 
 // heapsort
 void heapsort(int arr[], int size);
@@ -263,8 +263,8 @@ void heapify(int arr[], int size, int i){
 }
 
 // non-recursive
-void heapifyV2(int arr[], int size){
-    int largest = 0; 
+void heapifyV2(int arr[], int size, int i){
+    int largest = i; 
     int LC = (2*largest) + 1;
     int RC = (2*largest) + 2;
     

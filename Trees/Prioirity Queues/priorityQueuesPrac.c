@@ -123,17 +123,13 @@ void insert(Heap* H, int priority, const char* name){
 
 Person deleteMin(Heap* H){
     Person temp = {NULL, 0};
-
     if (H->lastidx != -1){
-        temp.priority = H->list[0].priority;
-        temp.name = malloc(30);
+        temp = H->list[0];
+        Person data = H->list[H->lastidx--];
+        H->list[0] = data;
 
-        strcpy(temp.name, H->list[0].name);
-        free(H->list[0].name);
-
-        H->list[0] = H->list[H->lastidx--];
         heapifyDown(H, H->lastidx + 1, 0);
     }
-
+    
     return temp;
 }
