@@ -142,24 +142,15 @@ void deleteNode(Tree* T, int data){
 
 
 void inorder(Tree T){
-	if (T != NULL){
-		inorder(T->left);
-		printf("%d ", T->data);
-		inorder(T->right);
-	}
+
+
 }
 
 void preorder(Tree T){
-	if (T != NULL){
-		printf("%d ", T->data);
-		preorder(T->left);
-		preorder(T->right);
-	}
+
+
 }
+
 void postorder(Tree T){
-	if (T != NULL){
-		postorder(T->left);
-		postorder(T->right);
-		printf("%d ", T->data);
-	}
+	
 }

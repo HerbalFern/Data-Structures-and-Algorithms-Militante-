@@ -192,12 +192,12 @@ void inorder(VHeap VH, SET num){
 int min(VHeap VH, SET num){
     SET trav;
     for (trav = num; VH.L[trav].left != -1; trav = VH.L[trav].left){}
-    return VH.L[trav].data;
+    return trav == -1 ? -1 : VH.L[trav].data;
 }
 
 
 int max(VHeap VH, SET num){
     SET trav;
     for (trav = num; VH.L[trav].right != -1; trav = VH.L[trav].right){}
-    return VH.L[trav].data;
+    return trav == -1 ? -1 : VH.L[trav].data;
 }
